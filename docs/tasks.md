@@ -18,15 +18,15 @@
 Sprint Goal: Overlay ve popup üzerinde model seçimi/tercihleriyle akıcı bir deneyim; görsel ve erişilebilirlik polish.
 
 ### In Progress
-- [ ] Model aramada debounce (250 ms) ve favorileri listede en üste alma.
-- [ ] Overlay buton/select mikro hover/active animasyonları (reduced-motion’a saygı).
+- [x] Model aramada debounce (250 ms) ve favorileri listede en üste alma.
+- [x] Overlay buton/select mikro hover/active animasyonları (reduced-motion’a saygı).
 
 ### Next
 - [ ] Paneli sürüklenebilir yapmak (başlıktan drag-n-drop) ve tek satır rozete minimize/expand mikro etkileşimleri.
-- [ ] Favori modelleri overlay "Model seç" menüsünde üstte sıralama.
-- [ ] Lint/format temizliği ve küçük Prettier satır kırma uyarılarının giderilmesi.
+- [x] Favori modelleri overlay "Model seç" menüsünde üstte sıralama.
+- [x] Lint/format temizliği ve küçük Prettier satır kırma uyarılarının giderilmesi.
 - [ ] Basit e2e akış testi: manuel modda tetikleme + cache hit + model override doğrulaması.
-- [ ] Paketleme ve mağaza ön kontrol listesi (gizlilik beyanı, ikonlar, kısa açıklama).
+- [x] Paketleme ve mağaza ön kontrol listesi (gizlilik beyanı, ikonlar, kısa açıklama).
 
 ### Done (son iterasyon)
 - [x] `background.js`: `OPENROUTER_MODELS` + 10 dk session TTL cache.
@@ -46,13 +46,13 @@ Notlar:
 Hedef: Çalışır bir Next.js tabanı, Manifest v3 eklenti iskeleti ve temel UI iskeleti.
 
 Görevler:
-- [ ] Next.js + TypeScript + ESLint + Prettier yapılandırması (repo hijyeni).
-- [ ] Tailwind CSS ve ShadCN UI kurulumu; temel tema ve buton/alert bileşenleri.
-- [ ] Manifest v3 ile eklenti iskeleti: background service worker, content script, popup.
-- [ ] UyarıPaneli için placeholder overlay (content script ile sayfaya enjekte).
-- [ ] CI: GitHub Actions (lint + build) pipeline’ı.
-- [ ] Geliştirici deneyimi: dlog/DEBUG bayrağı (README’ye kullanım notu).
-- [ ] Dokümantasyon: README kurulum/çalıştırma; ADR: “Eklenti + Next.js mimarisi”.
+- [x] Next.js + TypeScript + ESLint + Prettier yapılandırması (repo hijyeni).
+- [x] Tailwind CSS ve ShadCN UI kurulumu; temel tema ve buton/alert bileşenleri.
+- [x] Manifest v3 ile eklenti iskeleti: background service worker, content script, popup.
+- [x] UyarıPaneli için placeholder overlay (content script ile sayfaya enjekte).
+- [x] CI: GitHub Actions (lint + build) pipeline’ı.
+- [x] Geliştirici deneyimi: dlog/DEBUG bayrağı (README’ye kullanım notu).
+- [x] Dokümantasyon: README kurulum/çalıştırma; ADR: “Eklenti + Next.js mimarisi”.
 
 Bağımlılıklar:
 - ShadCN UI ve Tailwind, Next.js kurulumuna bağlıdır.
@@ -63,26 +63,26 @@ DoD/AC:
 - Lint/format temiz geçer; CI yeşildir.
 - README güncel; DEBUG varsayılan kapalıdır.
 
-### Sprint 2 — Veri Katmanı ve Temel Özellikler
-Hedef: Firestore entegrasyonu, veri modelleri ve ilk kullanıcı akışları.
+### Sprint 2 — UX, Erişilebilirlik ve Yayına Hazırlık
+Hedef: Panel etkileşimleri (sürüklenebilirlik, minimize/expand), e2e duman testi ve mağaza yayın hazırlığı.
 
 Görevler:
-- [ ] Firebase Firestore entegrasyonu; .env.example ve güvenli config akışı.
-- [ ] Veri modelleri: SahteHaber, DolandiricilikGirisimi, KullaniciBildirimi (tipler/interface’ler).
-- [ ] Kullanıcı Bildirim Formu: content script/popup üzerinden gönderim; Firestore’a yazma.
-- [ ] GüvenilirlikGöstergesi: sahte skor/placeholder ile temel gösterge.
-- [ ] AyarlarPaneli iskeleti: hassasiyet ve uyarı türleri için toggle’lar (persist local).
-- [ ] Gizlilik notu ve veri minimizasyonu dokümantasyonu.
+- [ ] Paneli sürüklenebilir yapmak (başlıktan drag-n-drop), köşe konumlarına snap.
+- [ ] Rozete minimize/expand mikro etkileşimleri; reduced-motion’a saygı; durumun kalıcı tutulması.
+- [ ] E2E duman testi: manuel mod + cache hit + model override akışı (manuel doğrulama adımlarıyla).
+- [ ] Mağaza hazırlığı: ekran görüntüleri (LOW/MEDIUM/HIGH, Popup, Detay/JSON), ikon seti (128/48/16), listeleme metinleri son kontroller.
+- [ ] QA ve performans: throttle/debounce doğrulaması, gereksiz reflow önleme, DEBUG kapalıyken sessiz log.
 
 Bağımlılıklar:
 - Sprint 1 tamamlanmış temel UI ve eklenti iskeleti.
-- Firestore erişim anahtarlarının güvenli yönetimi.
+- OpenRouter API anahtarı kullanıcı tarafından sağlanmış olmalı.
 
 DoD/AC:
-- Firestore’a başarılı okuma/yazma; hata yönetimi ve basit retry.
-- Bildirim gönderimleri koleksiyona düşer; temel gösterge görünür.
-- Ayarlar local’de kalıcıdır; DEBUG kapalıyken gürültü yok.
-- Dokümantasyon günceldir (README, ADR veri katmanı kararı).
+- Panel mouse ile sürüklenebilir; klavye erişilebilirliği ve odak halkaları korunur.
+- Minimize/expand akışı hatasız; state sayfa yenilemelerinde beklenen şekilde davranır.
+- Duman test akışı adım adım geçer; hatalarda kullanıcıya dost mesajlar.
+- `web/dist/extension.zip` oluşturulur; STORE_LISTING.md güncel ve eksiksizdir.
+- Loglar temiz/gated; performans gözle görülür yavaşlama yoktur.
 
 ### Sprint 3 — Analiz, Uyarılar ve Performans
 Hedef: İçerik analizi hattı, görsel/işitsel uyarılar ve temel performans iyileştirmeleri.
