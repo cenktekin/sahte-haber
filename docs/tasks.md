@@ -1,27 +1,39 @@
 # Görevler ve Uygulama Planı
 
-- [ ] Next.js projesi oluştur ve temel bileşenleri kur.
-- [ ] Firebase Firestore'u projeye entegre et.
-- [ ] SahteHaberler, DolandiricilikGirisimleri ve KullaniciBildirimleri koleksiyonlarını Firebase'de oluştur.
-- [ ] UyarıPaneli React bileşenini geliştir.
-  - _İlgili gereksinimler: Görsel Uyarılar, İşitsel Uyarılar_
-- [ ] GüvenilirlikGöstergesi React bileşenini geliştir.
-  - _İlgili gereksinimler: Güvenilirlik Derecelendirmesi_
-- [ ] AyarlarPaneli React bileşenini geliştir.
-  - _İlgili gereksinimler: Özelleştirilebilir Ayarlar_
-- [ ] BildirimFormu React bileşenini geliştir.
-  - _İlgili gereksinimler: Kullanıcı Tarafından Bildirme_
-- [ ] ArkaPlanServisi'ni (Next.js API Routes kullanarak) geliştir.
-  - _İlgili gereksinimler: Gerçek Zamanlı Analiz, Veritabanı Güncellemesi_
-- [ ] Genkit'i entegre ederek AI modellerini sahte haber ve dolandırıcılık tespiti için kullan.
-  - _İlgili gereksinimler: Gerçek Zamanlı Analiz_
-- [ ] Chrome Extension API veya benzeri bir API kullanarak tarayıcı eklentisini geliştir.
-- [ ] Kullanıcı arayüzünü (ShadCN UI ve Tailwind CSS) tasarla ve geliştir.
-  - _İlgili gereksinimler: Basit ve Sezgisel Arayüz, Okunabilirlik, Net Uyarılar, Erişilebilirlik_
-- [ ] Eklentinin performansını optimize et.
-  - _İlgili gereksinimler: Performans_
-- [ ] Eklentiyi test et ve hataları gider.
-- [ ] Eklentiyi yayınla.
+## Durum Özeti (Güncel)
+ - [x] MV3 eklenti prototipi çalışıyor (overlay + background + popup).
+ - [x] Minimal Glass UI (nötr arka plan, blur, outline; risk rengi sol şerit/rozet).
+ - [x] Manuel analiz modu (otomatik kapalı, "Analiz et" ile tetik).
+ - [x] Panel ayarları: konum, minimize, tema/aksan.
+ - [x] Alan adı filtresi: NEWS_ONLY + DOMAIN_ALLOWLIST.
+ - [x] Önbellek: analiz sonuçları `chrome.storage.session` üzerinde `CACHE_TTL` sn.
+ - [x] Dinamik model listesi (`OPENROUTER_MODELS`), arama + "yalnız free" filtresi.
+ - [x] Favoriler (`FAVORITE_MODELS`) ve son kullanılan (`LAST_MODEL`).
+ - [x] Overlay'de tek seferlik "Model seç" override.
+ - [x] Model listesi 10 dk TTL ile session cache.
+ - [x] JSON/Detay panelleri, kopyalama, Esc ile kapatma, odak halkaları.
+
+## Güncel Sprint (1–2 hafta)
+
+Sprint Goal: Overlay ve popup üzerinde model seçimi/tercihleriyle akıcı bir deneyim; görsel ve erişilebilirlik polish.
+
+### In Progress
+- [ ] Model aramada debounce (250 ms) ve favorileri listede en üste alma.
+- [ ] Overlay buton/select mikro hover/active animasyonları (reduced-motion’a saygı).
+
+### Next
+- [ ] Paneli sürüklenebilir yapmak (başlıktan drag-n-drop) ve tek satır rozete minimize/expand mikro etkileşimleri.
+- [ ] Favori modelleri overlay "Model seç" menüsünde üstte sıralama.
+- [ ] Lint/format temizliği ve küçük Prettier satır kırma uyarılarının giderilmesi.
+- [ ] Basit e2e akış testi: manuel modda tetikleme + cache hit + model override doğrulaması.
+- [ ] Paketleme ve mağaza ön kontrol listesi (gizlilik beyanı, ikonlar, kısa açıklama).
+
+### Done (son iterasyon)
+- [x] `background.js`: `OPENROUTER_MODELS` + 10 dk session TTL cache.
+- [x] `background.js`: Birincil→Yedek fallback, `LAST_MODEL` yazımı.
+- [x] `popup.js`: Dinamik model listesi, arama, "yalnız free", favoriler; Kaydet’te session temizleme.
+- [x] `content.js`: Minimal Glass, Detay/JSON ayrımı, model override select, odak halkaları.
+- [x] JSON ham çıktının düzgün girintilenmesi ve meta (url, model) ile gösterimi.
 
 ## Sprint Planı (2 hafta/sprint)
 

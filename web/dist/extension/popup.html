@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sahte Haber Uyarıcısı</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <h1 class="title">Sahte Haber Uyarıcısı</h1>
+      <section>
+        <h2 class="title">OpenRouter Ayarları</h2>
+        <label class="row" for="apiKey">API Key</label>
+        <input
+          id="apiKey"
+          type="password"
+          placeholder="sk-or-..."
+          style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #0002"
+        />
+
+        <label class="row" for="primaryModel">Birincil Model</label>
+        <select
+          id="primaryModel"
+          style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #0002"
+        >
+          <option value="openai/gpt-oss-120b:free">openai/gpt-oss-120b:free (varsayılan)</option>
+          <option value="google/gemini-2.5-flash-lite">google/gemini-2.5-flash-lite</option>
+          <option value="meta-llama/llama-3.1-8b-instruct:free">
+            meta-llama/llama-3.1-8b-instruct:free
+          </option>
+        </select>
+        <label class="row" style="gap: 8px; align-items: center">
+          <input id="favPrimary" type="checkbox" />
+          <span>Bu modeli favorilere ekle</span>
+        </label>
+
+        <label class="row" for="fallbackModel">Yedek Model</label>
+        <select
+          id="fallbackModel"
+          style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #0002"
+        >
+          <option value="google/gemini-2.5-flash-lite">
+            google/gemini-2.5-flash-lite (varsayılan)
+          </option>
+          <option value="openai/gpt-oss-120b:free">openai/gpt-oss-120b:free</option>
+          <option value="meta-llama/llama-3.1-8b-instruct:free">
+            meta-llama/llama-3.1-8b-instruct:free
+          </option>
+        </select>
+        <label class="row" style="gap: 8px; align-items: center">
+          <input id="favFallback" type="checkbox" />
+          <span>Bu modeli favorilere ekle</span>
+        </label>
+
+        <div class="row" style="gap: 8px; align-items: center; margin-top: 8px">
+          <input
+            id="modelSearch"
+            type="text"
+            placeholder="Model ara..."
+            style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #0002"
+          />
+          <label style="display: flex; gap: 6px; align-items: center">
+            <input id="onlyFree" type="checkbox" />
+            <span>Yalnız free</span>
+          </label>
+        </div>
+        <div id="favorites" class="row" style="flex-wrap: wrap; gap: 6px; margin-top: 6px"></div>
+
+        <div class="row" style="gap: 8px; margin-top: 10px">
+          <button id="saveOpenRouter" class="btn">Kaydet</button>
+          <button id="testOpenRouter" class="btn">Test</button>
+        </div>
+      </section>
+
+      <section style="margin-top: 12px">
+        <h2 class="title">Alan Adı Filtresi ve Önbellek</h2>
+        <label class="row">
+          <input id="newsOnly" type="checkbox" />
+          <span>Yalnızca izinli haber sitelerinde analiz et</span>
+        </label>
+        <label class="row" for="allowlist">İzinli alan adları</label>
+        <textarea
+          id="allowlist"
+          rows="3"
+          placeholder="ornek.com\nnytimes.com, bbc.com"
+          style="
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #0002;
+            resize: vertical;
+          "
+        ></textarea>
+        <div class="row" style="gap: 8px; align-items: center">
+          <label for="cacheTtl" style="min-width: 160px">Cache TTL (saniye)</label>
+          <input
+            id="cacheTtl"
+            type="number"
+            min="0"
+            step="30"
+            value="300"
+            style="width: 120px; padding: 6px; border-radius: 8px; border: 1px solid #0002"
+          />
+        </div>
+        <p class="hint">Önerilen TTL: 300 sn (5 dk). 0, önbelleği kapatır.</p>
+      </section>
+
+      <section style="margin-top: 12px">
+        <h2 class="title">Uyarı Hassasiyeti</h2>
+        <div class="row" style="gap: 8px; align-items: center">
+          <label for="sensitivity" style="min-width: 140px">Hassasiyet (0-100)</label>
+          <input
+            id="sensitivity"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="50"
+            style="flex: 1"
+          />
+          <span id="sensitivityValue" style="min-width: 32px; text-align: right">50</span>
+        </div>
+        <p class="hint">Değer yükseldikçe uyarı verme eşiği artar (daha hassas).</p>
+      </section>
+
+      <section style="margin-top: 12px">
+        <h2 class="title">Panel ve Davranış</h2>
+        <label class="row">
+          <input id="manualMode" type="checkbox" />
+          <span>Yalnızca isteğe bağlı analiz (otomatik çalıştırma yok)</span>
+        </label>
+        <label class="row">
+          <input id="minimizeDefault" type="checkbox" />
+          <span>Başlangıçta paneli küçült</span>
+        </label>
+        <div class="row" style="gap: 8px; align-items: center">
+          <label for="panelPosition" style="min-width: 160px">Panel Konumu</label>
+          <select
+            id="panelPosition"
+            style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #0002"
+          >
+            <option value="top-right">Sağ Üst (varsayılan)</option>
+            <option value="top-left">Sol Üst</option>
+            <option value="bottom-right">Sağ Alt</option>
+            <option value="bottom-left">Sol Alt</option>
+          </select>
+        </div>
+        <div class="row" style="gap: 8px; align-items: center">
+          <label for="panelAccent" style="min-width: 160px">Tema (Accent)</label>
+          <select
+            id="panelAccent"
+            style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #0002"
+          >
+            <option value="auto">Otomatik</option>
+            <option value="orange">Turuncu</option>
+            <option value="blue">Mavi</option>
+            <option value="green">Yeşil</option>
+            <option value="red">Kırmızı</option>
+          </select>
+        </div>
+        <p class="hint">
+          Küçültme/konum ve tema, sayfa üstü panelin görünümünü etkiler. Klavye: Esc ile kapat.
+        </p>
+      </section>
+
+      <section style="margin-top: 12px">
+        <label class="row">
+          <input id="debugToggle" type="checkbox" />
+          <span>DEBUG modunu etkinleştir</span>
+        </label>
+        <p class="hint">Bu ayar geçerli tarayıcı için yereldir.</p>
+        <button id="ping" class="btn">Arka plana ping</button>
+      </section>
+      <pre id="out" class="out" aria-live="polite"></pre>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -68,3 +68,66 @@ Bu belge, Sahte Haber ve Dolandırıcılık Girişimi Uyarıcı Tarayıcı Eklen
 1. WHEN eklenti çalışırsa, THEN minimum veri toplanmalıdır.
 1. WHEN veri toplanırsa, THEN veri güvenli bir şekilde saklanmalıdır.
 1. WHEN kullanıcı verileri talep ederse, THEN kullanıcıya verileri verilmelidir.
+
+### Gereksinim 9: Manuel Analiz Modu
+**User Story:** Bir kullanıcı olarak, analizlerin yalnızca ben istersem çalışmasını istiyorum, böylece gereksiz çağrıları ve dikkat dağınıklığını önleyeyim.
+
+#### Kabul Kriterleri
+1. WHEN Manuel Mod açıksa, THEN otomatik analiz yapılmamalıdır.
+1. WHEN kullanıcı “Analiz et”e tıklarsa, THEN analiz başlatılmalıdır.
+1. WHEN manuel mod aktifse, THEN panel bu durumu net mesaj ve buton ile göstermelidir.
+
+### Gereksinim 10: Alan Adı Filtresi ve Önbellek (CACHE_TTL)
+**User Story:** Bir kullanıcı olarak, yalnızca haber sitelerinde çalışmasını ve gereksiz tekrar çağrıların önlenmesini istiyorum.
+
+#### Kabul Kriterleri
+1. WHEN NEWS_ONLY açıksa, THEN sadece haber/doğrulama sitelerinde çalışmalıdır.
+1. WHEN DOMAIN_ALLOWLIST tanımlıysa, THEN sadece listelenen alan adlarında analiz yapılmalıdır.
+1. WHEN CACHE_TTL > 0 ise, THEN aynı URL için sonuçlar oturumda TTL süresince kullanılmalıdır.
+
+### Gereksinim 11: Dinamik Model Listesi
+**User Story:** Bir kullanıcı olarak, OpenRouter’daki modellerin güncel listesini görüp seçim yapabilmek istiyorum.
+
+#### Kabul Kriterleri
+1. WHEN popup açılırsa, THEN model listesi OpenRouter `/models` üzerinden çekilmelidir.
+1. THEN liste en az `id`, `name` ve `free` bilgisini içermelidir.
+1. THEN model listesi 10 dakika süreyle `storage.session` üzerinde cache’lenmelidir.
+
+### Gereksinim 12: Favoriler ve Son Kullanılan Model
+**User Story:** Bir kullanıcı olarak, sık kullandığım modelleri favorileyebilmek ve eklentinin son kullandığımı hatırlamasını istiyorum.
+
+#### Kabul Kriterleri
+1. WHEN kullanıcı favori işaretlerse, THEN `FAVORITE_MODELS` altında kalıcı olarak saklanmalıdır.
+1. WHEN bir analiz başarıyla sonuçlanırsa, THEN kullanılan model `LAST_MODEL` olarak saklanmalıdır.
+1. WHEN popup açılırsa, THEN birincil model seçiminde `LAST_MODEL` önceliklendirilebilir.
+
+### Gereksinim 13: Tek Seferlik Model Override (Overlay)
+**User Story:** Bir kullanıcı olarak, kalıcı ayarı değiştirmeden tek bir analiz için farklı model seçebilmek istiyorum.
+
+#### Kabul Kriterleri
+1. WHEN overlay üzerindeki “Model seç”ten bir değer seçilirse, THEN yalnızca o çağrıda bu model kullanılmalıdır.
+1. THEN kalıcı birincil/yedek model ayarları değişmemelidir.
+
+### Gereksinim 14: Panel Davranışları (Konum, Tema, Minimize)
+**User Story:** Bir kullanıcı olarak, panelin konumunu/temasını ayarlamak ve minimal görünümle çalışmak istiyorum.
+
+#### Kabul Kriterleri
+1. THEN panel konumu `top-right/top-left/bottom-right/bottom-left` seçeneklerini desteklemelidir.
+1. THEN tema/aksan panelin outline ve rozetlerinde yansıtılmalıdır (arka plan nötr kalabilir).
+1. THEN minimize aktifken içerik/aksiyon bölümü gizlenebilir; manuel modda analiz butonu erişilebilir kalmalıdır.
+
+### Gereksinim 15: Erişilebilirlik
+**User Story:** Bir kullanıcı olarak, klavyeyle paneli kullanabilmek, odak halkalarını görebilmek ve Esc ile kapatabilmek istiyorum.
+
+#### Kabul Kriterleri
+1. THEN buton ve seçim kutuları klavyeyle erişilebilir ve belirgin odak halkasına sahip olmalıdır.
+1. THEN Esc ile panel kapatılabilmelidir.
+1. THEN ARIA nitelikleri (rol, aria-label) uygun şekilde tanımlanmalıdır.
+
+### Gereksinim 16: Minimal Glass UI
+**User Story:** Bir kullanıcı olarak, göz yormayan modern bir arayüz istiyorum.
+
+#### Kabul Kriterleri
+1. THEN panel koyu nötr arka plan, hafif blur (`backdrop-filter`) ve ince outline ile görünmelidir.
+1. THEN risk rengi sol şerit ve rozet üzerinden gösterilmelidir.
+1. THEN Detay ve JSON görünümleri ayrı butonlarla açılıp kapanmalıdır.

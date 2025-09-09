@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Sahte Haber Uyarıcısı",
+  "version": "0.1.0",
+  "description": "Ziyaret edilen sayfalarda şüpheli içerikleri tespit edip uyarı veren yardımcı eklenti.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["https://openrouter.ai/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -10,7 +10,9 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:ext": "rm -rf dist/extension && mkdir -p dist && cp -r extension dist/extension",
+    "package:ext": "npm run build:ext && (cd dist/extension && zip -r ../extension.zip .)"
   },
   "dependencies": {
     "next": "15.5.2",
